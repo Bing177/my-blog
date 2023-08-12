@@ -9,7 +9,7 @@ Route::get('/', function () {
 // 普通管理员组
 Route::group('admin', function () {
     // 路由跳转到登录页
-    Route::rule('/', 'admin/user/index', 'get');
+    Route::rule('/', 'admin/home/index', 'get');
     // 路由跳转到注册页
     Route::rule('/logup', 'admin/index/register', 'get');
     // 路由跳转到首页
