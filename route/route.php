@@ -1,15 +1,15 @@
 <?php
 use think\facade\Route;
 
-// 重定向到首页
+// 重定向到登录页
 Route::get('/', function () {
-    return redirect('admin/home/index');
+    return redirect('admin/index/login');
 });
 
 // 普通管理员组
 Route::group('admin', function () {
     // 路由跳转到登录页
-    Route::rule('/', 'admin/index/login', 'get');
+    Route::rule('/', 'admin/user/index', 'get');
     // 路由跳转到注册页
     Route::rule('/logup', 'admin/index/register', 'get');
     // 路由跳转到首页
