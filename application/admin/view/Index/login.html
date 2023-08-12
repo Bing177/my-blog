@@ -1,0 +1,106 @@
+<link rel="stylesheet" href="/static/admin/css/login.css">
+<form class="layui-form">
+    <div class="demo-login-container">
+        <div class="layui-form-item">
+            <div class="layui-input-wrap">
+                <div class="layui-input-prefix">
+                    <i class="layui-icon layui-icon-username"></i>
+                </div>
+                <input type="text" name="username" value="" lay-verify="required" placeholder="用户名" lay-reqtext="请填写用户名"
+                    autocomplete="off" class="layui-input" lay-affix="clear">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-wrap">
+                <div class="layui-input-prefix">
+                    <i class="layui-icon layui-icon-password"></i>
+                </div>
+                <input type="password" name="password" value="" lay-verify="required" placeholder="密   码"
+                    lay-reqtext="请填写密码" autocomplete="off" class="layui-input" lay-affix="eye">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <input type="checkbox" id="rememberCheckbox" lay-skin="primary" title="记住密码" lay-filter="remember-pwd">
+            <a href="form.html#forget" style="float: right; margin-top: 7px;">忘记密码？</a>
+        </div>
+        <div class="layui-form-item">
+            <button id="login" class="layui-btn layui-btn-fluid" lay-submit lay-filter="demo-login">登录</button>
+        </div>
+        <div class="layui-form-item register">
+            <span>没有账号？<a href="{:url('/admin/logup')}">立即注册</a></span>
+        </div>
+    </div>
+</form>
+<script>
+    $(function () {
+        let elem
+        let checked
+        let value
+        let form
+        layui.use(function () {
+            let loginInfo = cookie.get('isLogin') || ''
+            let remember = cookie.get('remember') || null
+            $('input[name="username"]').focus()
+            if (loginInfo && remember === 'true') {
+                let admin = loginInfo.split('&')
+                let uname = admin[0].substring(9)
+                let pwd = admin[1].substring(9)
+                $('input[name="username"]').focus()
+                $('input[name="username"]').val(uname)
+                $('input[name="password"]').val(pwd)
+                $('#rememberCheckbox').prop('checked', true)
+            }
+            form = layui.form
+            form.on('checkbox(remember-pwd)', function (data) {
+                elem = data.elem
+                checked = elem.checked
+                value = elem.value
+                if (checked) {
+                    cookie.set('isLogin', $('form').serialize(), {
+                        maxAge: 604800
+                    })
+                    cookie.set('remember', 'true', {
+                        maxAge: 604800
+                    })
+                } else {
+                    cookie.set('remember', 'false', {
+                        maxAge: 0
+                    })
+                }
+            })
+            layui.form.render()
+        })
+
+        $('#login').click(function () {
+            const idx = layer.open({
+                type: 3,
+                title: false,
+                content: 'Loading...',
+            })
+            const res = $.ajax({
+                url: "{:url('/admin/index/login')}",
+                type: "post",
+                data: $('form').serialize(),
+                dataType: 'json',
+                success(res) {
+                    if (res.code) {
+                        cookie.set('loginInfo', $('form').serialize(), {
+                            maxAge: 604800
+                        })
+                        layer.msg(res.msg + res.wait + 's后跳转')
+                        setTimeout(() => {
+                            location.replace(res.url)
+                        }, res.wait * 1000)
+                    } else {
+                        layer.msg(res.msg)
+                    }
+                    layer.close(idx)
+
+                }
+            });
+
+            return false;
+        });
+    });
+</script>

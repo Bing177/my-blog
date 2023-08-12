@@ -1,0 +1,216 @@
+<link rel="stylesheet" href="/static/admin/css/index.css">
+{include file='common/header'/}
+<div data-flg="{$flg}" class="flg"></div>
+<div class="layui-panel">
+    <div class="banner"></div>
+</div>
+<div class="container">
+    <div class="jumbotron">
+        <h2 class="animated fadeInDown">WCC の 博客</h2>
+        <p class="animated shake">
+            “青青子衿，悠悠我心。但为君故，沉吟至今。”
+        </p>
+        <h5 class="animated shake signature">—— 王之涣</h5>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-8">
+            <div class="page-header h3">最近发布</div>
+            <div class="article-list">
+                <div class="article-list-item">
+                    <a href="#" class="title">数据库学习简单教程（递归的应用）（一）</a>
+                    <div class="info">
+                        <span class="author">作者：赏金</span>-
+                        <span class="time">发布时间：2018-02-31 03:55:23</span>-
+                        <span class="read">阅读：1000</span>-
+                        <span class="comment">评论：1K</span>
+                    </div>
+                </div>
+                <div class="article-list-item">
+                    <a href="#" class="title">数据库学习简单教程（递归的应用）（一）</a>
+                    <div class="info">
+                        <span class="author">作者：赏金</span>-
+                        <span class="time">发布时间：2018-02-31 03:55:23</span>-
+                        <span class="read">阅读：1000</span>-
+                        <span class="comment">评论：1K</span>
+                    </div>
+                </div>
+                <div class="article-list-item">
+                    <a href="#" class="title">数据库学习简单教程（递归的应用）（一）</a>
+                    <div class="info">
+                        <span class="author">作者：赏金</span>-
+                        <span class="time">发布时间：2018-02-31 03:55:23</span>-
+                        <span class="read">阅读：1000</span>-
+                        <span class="comment">评论：1K</span>
+                    </div>
+                </div>
+                <div class="article-list-item">
+                    <a href="#" class="title">数据库学习简单教程（递归的应用）（一）</a>
+                    <div class="info">
+                        <span class="author">作者：赏金</span>-
+                        <span class="time">发布时间：2018-02-31 03:55:23</span>-
+                        <span class="read">阅读：1000</span>-
+                        <span class="comment">评论：1K</span>
+                    </div>
+                </div>
+                <div class="article-list-item">
+                    <a href="#" class="title">数据库学习简单教程（递归的应用）（一）</a>
+                    <div class="info">
+                        <span class="author">作者：赏金</span>-
+                        <span class="time">发布时间：2018-02-31 03:55:23</span>-
+                        <span class="read">阅读：1000</span>-
+                        <span class="comment">评论：1K</span>
+                    </div>
+                </div>
+            </div>
+            <div id="demo-laypage-all"></div>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <div class="page-header h3">推荐文章</div>
+            <div class="topic-list">
+                <div class="topic-list-item">
+                    <a href="#" class="title">数据库学习简单教程（递归的应用）（一）</a>
+                </div>
+                <div class="topic-list-item">
+                    <a href="#" class="title">数据库学习简单教程（递归的应用）（一）</a>
+                </div>
+                <div class="topic-list-item">
+                    <a href="#" class="title">数据库学习简单教程（递归的应用）（一）</a>
+                </div>
+                <div class="topic-list-item">
+                    <a href="#" class="title">数据库学习简单教程（递归的应用）（一）</a>
+                </div>
+                <div class="topic-list-item">
+                    <a href="#" class="title">数据库学习简单教程（递归的应用）（一）</a>
+                </div>
+                <div class="topic-list-item">
+                    <a href="#" class="title">数据库学习简单教程（递归的应用）（一）</a>
+                </div>
+                <div class="topic-list-item">
+                    <a href="#" class="title">数据库学习简单教程（递归的应用）（一）</a>
+                </div>
+                <div class="topic-list-item">
+                    <a href="#" class="title">数据库学习简单教程（递归的应用）（一）</a>
+                </div>
+                <div class="topic-list-item">
+                    <a href="#" class="title">数据库学习简单教程（递归的应用）（一）</a>
+                </div>
+                <div class="topic-list-item">
+                    <a href="#" class="title">数据库学习简单教程（递归的应用）（一）</a>
+                </div>
+                <div class="topic-list-item">
+                    <a href="#" class="title">数据库学习简单教程（递归的应用）（一）</a>
+                </div>
+                <div class="topic-list-item">
+                    <a href="#" class="title">数据库学习简单教程（递归的应用）（一）</a>
+                </div>
+                <div class="topic-list-item">
+                    <a href="#" class="title">数据库学习简单教程（递归的应用）（一）</a>
+                </div>
+                <div class="topic-list-item">
+                    <a href="#" class="title">数据库学习简单教程（递归的应用）（一）</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        // 检查是否登录
+        let flg = $('.flg').attr('data-flg')
+        if (!flg) {
+            layer.msg('您还未登录，请先登录')
+            setTimeout(() => { location.replace("{:url('/admin')}") }, 1200)
+        }
+        // 日间模式
+        $('#light').click(function () {
+            $('body').removeClass('root')
+            $(".layui-nav").addClass('layui-bg-gray')
+            $(".layui-nav-child").css({
+                'background': '#FAFAFA'
+            })
+
+            $(".layui-panel").css({
+                opacity: 1
+            })
+            $(".jumbotron").css({
+                'backgroundColor': "#EEE",
+                'color': "#222"
+            })
+            $(".row").css({
+                'color': "#222"
+            })
+
+        })
+        // 夜间模式
+        $('#dark').click(function () {
+            $('body').addClass('root')
+            $(".layui-nav").removeClass('layui-bg-gray')
+            $(".layui-nav-child").css({
+                border: 'unset',
+                'background': '#2F363C',
+                'color': '#FAFAFA'
+            })
+            $(".layui-nav-child a").css({
+                'color': '#FAFAFA'
+            })
+            $(".layui-nav-child a").mouseenter(function () {
+                $(this).css({
+                    'color': '#222'
+                })
+            })
+            $(".layui-nav-child a").mouseleave(function () {
+                $(this).css({
+                    'color': '#FAFAFA'
+                })
+            })
+            $(".layui-panel").css({
+                opacity: 0.9,
+                border: 'unset'
+            })
+            $(".jumbotron").css({
+                'backgroundColor': "#2f2f2f",
+                'color': "#BBB"
+            })
+            $(".row").css({
+                'color': '#BBB'
+            })
+
+        })
+
+        // 分页
+        layui.use(function () {
+            var laypage = layui.laypage;
+            // 完整显示
+            laypage.render({
+                elem: 'demo-laypage-all', // 元素 id
+                count: 100, // 数据总数
+                layout: ['count', 'prev', 'page', 'next', 'skip'], // 功能布局
+                jump: function (obj) {
+                    console.log(obj);
+                }
+            });
+        });
+        // 注销
+        $('.logout').click(function () {
+            const layer = layui.layer
+            const util = layui.util
+            util.on('lay-on', {
+                'is-logout': function () {
+                    let idx = layer.confirm('是否注销', { icon: 0, title: false, closeBtn: 0 }, function () {
+                        let loginInfo = document.cookie
+                        loginInfo = loginInfo.split(';')
+                        let res = loginInfo.find(v => v.includes('loginInfo'))
+                        document.cookie = res + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                        location.replace('{:url("admin/index/login")}')
+                        layer.close(idx)
+                    }, function () {
+                        layer.close(idx)
+                    })
+                }
+            })
+        })
+    })
+
+
+</script>

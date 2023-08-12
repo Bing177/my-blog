@@ -1,0 +1,325 @@
+<link rel="stylesheet" href="/static/admin/css/profile.css">
+<script src="/static/admin/js/iconfont.js"></script>
+
+<!-- 左侧导航区 -->
+<ul class="layui-nav layui-nav-tree layui-nav-side" style="opacity: .96;">
+    <li class="layui-nav-item layui-nav-itemed">
+        <a href="javascript:;">用户管理</a>
+        <dl class="layui-nav-child">
+            <dd><a href="javascript:;" class="view" data-view="1">基本资料</a></dd>
+            <dd><a href="javascript:;" class="view" data-view="2">信息修改</a></dd>
+            <dd><a href="javascript:;" class="view" data-view="3">邮箱认证</a></dd>
+            <dd onclick="exit()"><a href="javascript:;">注销</a></dd>
+        </dl>
+    </li>
+    <li class="layui-nav-item"><a href="{:url('/admin/home')}">回到首页</a></li>
+    <li class="layui-nav-item"><a href="javascript:;" class="view" data-view="4">联系我们</a></li>
+    <li class="layui-nav-item"><a href="javascript:;" class="view" data-view="5">帮助</a></li>
+</ul>
+<!-- 右侧展示区 -->
+<div id="show" class="layui-body">
+    <!-- 基本资料 -->
+    <div class="item" id="basics" style="display: block;">
+        <div class="layui-panel">
+            <!-- 昵称 -->
+            <p style="font-family:cursive;font-size: 20px;font-weight: bold;">您好：{$profile.nickname}</p>
+            <h2>基本信息</h2>
+            <hr />
+            <div class="content">
+                <!-- 头像 -->
+                <div class="info avatar">
+                    <img src="{$profile.avatar}" alt="">
+                </div>
+                <!-- 账号 -->
+                <div class="info username">
+                    <label>用户名：</label>
+                    <h5>{$profile.username_text}</h5>
+                </div>
+                <!-- 邮箱 -->
+                <div class="info email">
+                    <label>邮箱：</label>
+                    <h5>{$profile.email?$profile.email:'暂未填写'}</h5>
+                </div>
+
+                <!-- 状态 -->
+                <div class="info status">
+                    <label>状态：</label>
+                    <h5>{$profile.status}</h5>
+                    {if condition = "$profile.status=='可用'"}
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-available"></use>
+                    </svg>
+                    {else/}
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-forbidden"></use>
+                    </svg>
+                    {/if}
+                </div>
+                <!-- 是否超级管理员 -->
+                <div class="info is-super">
+                    <label>超级管理员：</label>
+                    <h5>{$profile.is_super}</h5>
+                    {if condition = "$profile.is_super =='是'"}
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-vip-true"></use>
+                    </svg>
+                    {else/}
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-vip-false"></use>
+                    </svg>
+                    {/if}
+                </div>
+                <!-- 创建时间 -->
+                <div class="info createtime">
+                    <label>创建时间：</label>
+                    <h5>{$profile.createtime}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 信息修改 -->
+    <div class="item" id="info-update">
+        <div class="content content2">
+            <header>
+                <h3>修改资料</h3>
+                <h5>最近一次修改：{$profile.updatetime}</h5>
+            </header>
+            <hr />
+            <form class="layui-form layui-col-md6" enctype="multipart/form-data">
+                <!-- 头像文件 -->
+                <input type="file" name="avatar" id="avatar" />
+                <!-- 头像图片 -->
+                <img src="{$profile.avatar}" class="img" />
+                <!-- 昵称 -->
+                <div>
+                    <label>昵称</label>
+                    <div class="layui-input-wrap">
+                        <input type="text" name="nickname" value="{$profile.nickname}" lay-affix="clear"
+                            class="layui-input">
+                    </div>
+                </div>
+                <!-- 用户名 -->
+                <div>
+                    <label>用户名</label>
+                    <div class="layui-input-wrap">
+                        <input type="text" name="username" value="{$profile.username}" lay-affix="clear"
+                            class="layui-input">
+                    </div>
+                </div>
+                <!-- 密码 -->
+                <div>
+                    <label>密码</label>
+                    <div class="layui-input-wrap">
+                        <input type="text" name="password" placeholder="密码为空则不修改" lay-affix="clear" class="layui-input">
+                    </div>
+                </div>
+                <!-- 邮箱 -->
+                <div>
+                    <label>邮箱</label>
+                    <div class="layui-input-wrap">
+                        <input type="text" name="email" value="{$profile.email}" placeholder="邮箱暂未填写" lay-affix="clear"
+                            class="layui-input">
+                    </div>
+                </div>
+                {if condition = "$profile.is_super == '是'"}
+                <!-- 状态 -->
+                <div class="layui-col-md3">
+                    <label>状态</label>
+                    <select lay-filter="select-filter" data-select="{$profile.status}" name="status">
+                        <option value="-1">请选择</option>
+                        <option value="0">禁用</option>
+                        <option value="1">可用</option>
+                    </select>
+                </div>
+                <!-- 用户权限 -->
+                <div class="layui-col-md3">
+                    <label>用户权限</label>
+                    <input type="radio" lay-filter="radio-filter" name="privilege" value="1" title="超级" checked />
+                    <input type="radio" lay-filter="radio-filter" name="privilege" value="0" title="普通" />
+                </div>
+                {/if}
+                <div style="width: 60%;">
+                    <button type="button" id="submit" class="layui-btn layui-btn-fluid">确认修改</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- 邮箱认证 -->
+    <div class="item" id="email-auth">
+        <div class="content">
+            <h4>绑定邮箱</h4>
+            <hr />
+            <div class="banner">
+                <div class="avatar">
+                    <img src="{$profile.avatar}" alt="" />
+                </div>
+                <h4 class="nickname">{$profile.nickname}</h4>
+            </div>
+            <div class="layui-form layui-form-content">
+                <div class="layui-form-item layui-col-md7">
+                    <div class="layui-input-group">
+                        <div class="layui-input-split layui-input-prefix">
+                            邮箱
+                        </div>
+                        <input type="email" value="{$profile.email}" placeholder="请填写邮箱" class="layui-input input-email"
+                            readonly>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-col-md7">
+                    <div class="layui-input-group">
+                        <div class="layui-input-split layui-input-prefix">
+                            验证码
+                        </div>
+                        <input type="text" placeholder="不区分大小写" class="layui-input">
+                        <div class="layui-input-suffix">
+                            <button class="layui-btn layui-btn-primary" style="font-weight: bold;">获取验证码</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-col-md7">
+                    <button type="button" class="layui-btn layui-btn-primary layui-btn-radius btn-validate">验证</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 联系我们 -->
+    <div class="item" id="contact">
+        <div class="content">4</div>
+    </div>
+    <!-- 帮助 -->
+    <div class="item" id="help">
+        <div class="content">5</div>
+    </div>
+</div>
+
+</div>
+<script>
+
+    let element
+    let upload
+    let layer
+    let form
+    let file
+    let avatar
+    const nickname = $('input[name="nickname"]')
+    const username = $('input[name="username"]')
+    const password = $('input[name="password"]')
+    const email = $('input[name="email"]')
+    let status
+    let privilege
+    $(document).ready(function () {
+
+        layui.use(function () {
+            element = layui.element
+            upload = layui.upload
+            layer = layui.layer
+            form = layui.form
+            // 默认第一个选中
+            $('.layui-nav-child dd:eq(0)').addClass('layui-this')
+            $('option').each((i, e) => {
+                if ($('select').attr('data-select') === $(e).text()) {
+                    $(e).attr('selected', 'selected')
+                }
+            })
+
+            form.on('select(select-filter)', function (data) {
+                status = data.value
+            })
+            form.on('radio(radio-filter)', function (data) {
+                privilege = data.elem.value
+            })
+            form.render()
+        })
+
+        let scale = 100; // 初始背景图像大小，以百分比为单位
+        $(window).on('wheel', function (e) {
+            var delta = e.originalEvent.deltaY;
+            if (delta > 0) { // 滚轮向下滚动
+                scale += 10; // 减小背景图像大小
+                if (scale > 270) scale = 270; // 设置最小大小
+            } else { // 滚轮向上滚动
+                scale -= 10; // 增大背景图像大小
+                if (scale < 100) scale = 100; // 设置最大大小
+            }
+            $('body').css({
+                'background-size': scale + '%',
+            }); // 更新背景图像大小
+        });
+        $(".view").click(async function (e) {
+            let view = $(e.target).attr('data-view')
+            $(".item").eq(view - 1).css({ display: 'block' }).siblings().css({ display: 'none' })
+
+        })
+
+        $('.img').click(function () {
+            $('#avatar').click()
+        })
+        $('#avatar').change(function () {
+            file = this.files[0]
+            const reader = new FileReader()
+            reader.readAsDataURL(file)
+            reader.onload = function () {
+                avatar = reader.result
+                // avatar = avatar.replace(/^data:image\/(png|jpe?g);base64,/, '')
+                $('.img').prop('src', reader.result)
+            }
+        })
+        $('#submit').click(function () {
+            let formData = new FormData($('.layui-form')[0])
+            formData.append('avatar', file)
+            let idx = layer.open({
+                type: 3,
+                title: false,
+                content: 'Loading...'
+            })
+            $.ajax({
+                url: '{:url("/admin/update")}',
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: (res) => {
+                    if (!res.status) {
+                        // 失败的情况
+                        layer.msg(res.msg)
+                    }
+                    else {
+                        layer.msg(res.msg)
+                        setTimeout(() => {
+                            location.href = '{:url("/admin/profile")}'
+                        }, 800)
+                    }
+                    layer.close(idx)
+                },
+                error: (e) => {
+                    layer.close(idx)
+                },
+            })
+            return false
+        })
+    });
+
+    // 注销
+    function exit() {
+        layer.open({
+            type: 0,
+            title: false,
+            content: '确认注销',
+            icon: 3,
+            closeBtn: 0,
+            anim: 'slideDown',
+            btn: ['确认', '取消'],
+            btn1: (idx) => {
+                let loginInfo = document.cookie
+                loginInfo = loginInfo.split(';')
+                let res = loginInfo.find(v => v.includes('loginInfo'))
+                document.cookie = res + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                location.replace('{:url("/admin")}')
+                layer.close(idx)
+            },
+            btn2: () => {
+            }
+        })
+    }
+</script>

@@ -1,0 +1,26 @@
+<?php
+use think\facade\Route;
+
+// 重定向到首页
+Route::get('/', function () {
+    return redirect('admin/home/index');
+});
+
+// 普通管理员组
+Route::group('admin', function () {
+    // 路由跳转到登录页
+    Route::rule('/', 'admin/index/login', 'get');
+    // 路由跳转到注册页
+    Route::rule('/logup', 'admin/index/register', 'get');
+    // 路由跳转到首页
+    Route::rule('/home', 'admin/home/index', 'get');
+    // 路由跳转到图片码页
+    Route::rule('/code', 'admin/captcha/gencode', 'get');
+    // 路由跳转到个人中心页
+    Route::rule('/profile', 'admin/user/index', 'get');
+    Route::rule('/update', 'admin/user/update', 'post');
+});
+
+return [
+
+];
