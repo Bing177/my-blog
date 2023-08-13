@@ -86,7 +86,8 @@
                 success(res) {
                     if (res.code) {
                         cookie.set('loginInfo', $('form').serialize(), {
-                            maxAge: 604800
+                            maxAge: 604800,
+                            path: '/'
                         })
                         layer.msg(res.msg + res.wait + 's后跳转')
                         setTimeout(() => {
