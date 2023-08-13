@@ -1,0 +1,121 @@
+:root {
+    --light-color: #FAFAFA;
+    --dark-color: #2F363C;
+}
+
+.root {
+    background-color: var(--dark-color);
+}
+
+.icon {
+    width: 1em;
+    height: 1em;
+    margin-right: 10px;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+    font-size: 23px;
+}
+
+.icon.theme {
+    font-size: 27px;
+    vertical-align: middle;
+}
+
+.layui-nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex !important;
+    margin-top: 7px;
+}
+
+.symble {
+    width: 45px;
+}
+
+.content {
+    display: flex;
+    padding: 0 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.content h3,
+.content h5 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.content h3 {
+    font-size: 16px;
+    color: #ca0101;
+    padding: 5px 0;
+    font-weight: bolder;
+}
+
+.content h5 {
+    font-size: 12px;
+    color: #888;
+}
+
+.left {
+    margin-left: 46px;
+}
+
+.right {
+    display: flex !important;
+    margin-right: 46px;
+}
+
+.layui-nav-child dd {
+    padding: 5px 0;
+}
+
+.layui-nav-child dd .theme-content {
+    padding: 0 10px;
+}
+
+.layui-nav-child dd .title {
+    padding-right: 10px;
+}
+
+.container-search {
+    display: flex !important;
+    position: relative;
+    align-items: center;
+    margin: 0 10px;
+}
+
+.container-search .layui-input {
+    width: 240px;
+    padding-right: 17%;
+}
+
+.container-search .icon-search {
+    position: absolute;
+    right: 10px;
+    font-size: 24px;
+}
+
+.layui-panel .banner {
+    height: 270px;
+    padding: 32px;
+    background: url(/static/admin/images/b2.png) no-repeat center center;
+    background-size: cover;
+}
+
+.jumbotron p {
+    margin: 15px 0;
+}
+
+.signature {
+    text-align: center;
+}
+
+#user .layui-icon-down.layui-nav-more {
+    display: none;
+}

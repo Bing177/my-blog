@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: url(../images/b1.png) no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+    /* backdrop-filter: blur(3px); */
+
+}
+
+form {
+    padding: 10px;
+    border-radius: 5px;
+    width: 30%;
+    margin: 0 auto;
+    transform: translateY(50px);
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+.input-group {
+    margin: 20px 0;
+}
+
+.demo-login-container {
+    width: 320px;
+    margin: 21px auto 0;
+}
+
+.demo-login-other .layui-icon {
+    position: relative;
+    display: inline-block;
+    margin: 0 2px;
+    top: 2px;
+    font-size: 26px;
+}
+
+.register {
+    text-align: center;
+}
