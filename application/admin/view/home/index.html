@@ -120,7 +120,7 @@
         let flg = $('.flg').attr('data-flg')
         if (!flg) {
             layer.msg('您还未登录，请先登录')
-            setTimeout(() => { location.replace("{:url('/admin')}") }, 1200)
+            setTimeout(() => { location.replace("{:url('/')}") }, 1200)
         }
         // 日间模式
         $('#light').click(function () {

@@ -2,7 +2,7 @@
 namespace app\admin\controller;
 
 use think\Controller;
-use app\common\Model\Admin;
+use app\common\model\Admin;
 
 class Home extends Controller
 {
