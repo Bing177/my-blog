@@ -3,6 +3,8 @@
 namespace app\admin\controller;
 
 use think\Controller;
+use think\facade\Request;
+use think\captcha\Captcha;
 
 class Index extends Controller
 {
@@ -55,10 +57,24 @@ class Index extends Controller
         }
         return $this->fetch('login', ['title' => '登录']);
     }
+
+    // 生成图片验证码
+    public function genCaptcha()
+    {
+        // 验证码参数配置
+        $config = [
+            'expire' => 300,
+            'fontSize' => 17,
+            'imageW' => 120,
+            'length' => 4,
+            'bg' => [255, 243, 201]
+        ];
+        $captcha = new Captcha($config);
+        return $captcha->entry();
+    }
     // 后台注册
     public function register()
     {
-        session_start();
         if ($this->request->isPost()) {
             $data = [
                 'username' => $this->request->param('username', '', 'trim'),
@@ -75,9 +91,7 @@ class Index extends Controller
                     'wait' => 3
                 ];
             }
-            if ($data['code'] != $_SESSION['code']) {
-                return $this->error('验证码错误');
-            }
+
             if ($data['password'] != $data['repass']) {
                 return $this->error('密码与确认密码不一致');
             }

@@ -12,8 +12,8 @@ class Admin extends Validate
         'password' => ['require', 'regex:/^(?=.*[a-zA-Z])[a-zA-Z0-9]{6,20}$/'],
         'repass' => ['require', 'regex:/^(?=.*[a-zA-Z])[a-zA-Z0-9]{6,20}$/'],
         'nickname' => ['require', 'regex:/^(?!\s*$).{1,20}$/'],
-        'code' => ['require'],
-        'email' => ['regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/']
+        'code' => 'require|captcha',
+        'email' => ['regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'],
     ];
     /* 提示消息 */
     protected $message = [
@@ -26,7 +26,8 @@ class Admin extends Validate
         'nickname.require' => '昵称不能为空',
         'nickname.regex' => '昵称格式有误',
         'code.require' => '验证码不能为空',
-        'email.regex' => '邮箱格式有误'
+        'code.captcha' => '验证码有误',
+        'email.regex' => '邮箱格式有误',
     ];
     /* 验证场景 */
     public function sceneLogin()

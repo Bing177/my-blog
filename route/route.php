@@ -15,7 +15,7 @@ Route::group('admin', function () {
     // 路由跳转到首页
     Route::rule('/home', 'admin/home/index', 'get');
     // 路由跳转到图片码页
-    Route::rule('/code', 'admin/captcha/gencode', 'get');
+    Route::rule('/code', 'admin/index/genCaptcha', 'get');
     // 路由跳转到个人中心页
     Route::rule('/profile', 'admin/user/index', 'get');
     Route::rule('/update', 'admin/user/update', 'post');

@@ -42,7 +42,7 @@
             </div>
             <div class="layui-col-xs5">
                 <div style="margin-left: 10px;">
-                    <img src="{:url('/admin/code')}" class="code" />
+                    <img src="{:url('/admin/code')}" id="captcha" onclick="reloadCapt()" />
                 </div>
             </div>
         </div>
@@ -50,18 +50,32 @@
             <button id="logup" class="layui-btn layui-btn-fluid" lay-submit lay-filter="demo-logup">注册</button>
         </div>
         <div class="layui-form-item register">
-            <span>已有帐号，<a href="{:url('/admin')}">回到登录</a></span>
+            <span>已有帐号，<a href="{:url('/')}">回到登录</a></span>
         </div>
     </div>
 </form>
 <script>
-    $(function () {
-        $('input[name="username"]').focus()
-        $('.code').click(function () {
-            $(this).prop('src', "{:url('/admin/code?id=now()')}")
-        })
-        $('#logup').click(function () {
+    const uname = $('input[name="username"]')
+    const pwd = $('input[name="password"]')
+    const rps = $('input[name="repass"]')
+    const code = $('input[name="code"]')
 
+    // 重新加载图片验证码
+    function reloadCapt() {
+        $('#captcha').prop('src', '/admin/code?' + Math.random())
+    }
+
+    $(function () {
+        // 用户名获取焦点
+        $('input[name="username"]').focus()
+        // 注册按钮绑定点击事件
+        $('#logup').click(function () {
+            const formData = new FormData()
+            formData.append('username', uname.val())
+            formData.append('password', pwd.val())
+            formData.append('repass', rps.val())
+            formData.append('code', code.val())
+            reloadCapt()
             const idx = layer.open({
                 type: 3,
                 title: false,
@@ -69,23 +83,28 @@
             })
             const res = $.ajax({
                 url: "{:url('/admin/index/register')}",
-                type: "post",
-                data: $('form').serialize(),
+                type: "POST",
+                contentType: false,
+                processData: false,
+                data: formData,
                 dataType: 'json',
                 success(res) {
                     if (res.code) {
                         layer.msg(res.msg)
+
                         setTimeout(() => {
                             location.replace(res.url)
                         }, 1200)
                     } else {
                         layer.msg(res.msg)
+                        if (res.msg === '验证码有误') {
+                            code.focus()
+                        }
                     }
                     layer.close(idx)
-
                 }
             });
-            return false;
+            return false;   // 阻止默认事件
         });
     });
 </script>
