@@ -57,7 +57,7 @@ return [
         'port' => 465,
 
         // 邮箱账号
-        'username' => 'whb1771438097@foxmail.com',
+        'username' => '3162074050@qq.com',
 
         // 邮箱密码或授权码
         'password' => 'uhryvhybwlzgdccb',
