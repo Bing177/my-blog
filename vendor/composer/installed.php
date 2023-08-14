@@ -3,13 +3,22 @@
         'name' => 'topthink/think',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '22a2db5b12bf2771b1b46a506ab70e343049f769',
+        'reference' => '40c0f296e349502cc97a11158a3eb210af7192ad',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
+        'phpmailer/phpmailer' => array(
+            'pretty_version' => 'v6.7.1',
+            'version' => '6.7.1.0',
+            'reference' => '49cd7ea3d2563f028d7811f06864a53b1f15ff55',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../phpmailer/phpmailer',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'topthink/framework' => array(
             'pretty_version' => 'v5.1.42',
             'version' => '5.1.42.0',
@@ -22,7 +31,7 @@
         'topthink/think' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '22a2db5b12bf2771b1b46a506ab70e343049f769',
+            'reference' => '40c0f296e349502cc97a11158a3eb210af7192ad',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

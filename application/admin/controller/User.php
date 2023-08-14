@@ -1,8 +1,10 @@
 <?php
 namespace app\admin\controller;
 
+use think\Config;
 use think\Controller;
 use app\common\model\Admin;
+use app\helper\EmailHelper;
 
 class User extends Controller
 {
@@ -89,5 +91,31 @@ class User extends Controller
             }
         }
 
+    }
+
+    // 邮箱认证
+    public function sendEmail(Config $config)
+    {
+        if ($this->request->isPost()) {
+            $emailHelper = new EmailHelper($config);
+            $data = $this->request->param();
+            $num = '';
+            for ($i = 0; $i < 6; $i++) {
+                $num .= rand(0, 9);
+            }
+            $to = $data['email'];
+            $subject = '邮箱认证';
+            $body = "<h3>欢迎来到天空之眼</h3><hr/>
+            <p>还差一步就完成邮箱验证，这是验证码：
+            <a href='javascript:void(0);'>$num</a>
+            ，请勿将验证码告诉他人，若非本人操作请忽略该邮件。
+            </p>";
+
+            if ($emailHelper->sendEmail($to, $subject, $body)) {
+                return '邮箱发送成功，请注意查收';
+            } else {
+                return '发送失败：' . $emailHelper->sendEmail($to, $subject, $body);
+            }
+        }
     }
 }

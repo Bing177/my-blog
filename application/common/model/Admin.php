@@ -4,6 +4,8 @@ namespace app\common\model;
 use think\Model;
 use think\model\concern\SoftDelete;
 use app\common\validate\Admin as AdminValidate;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class Admin extends Model
 {
@@ -41,6 +43,11 @@ class Admin extends Model
         return $myGet[$value];
     }
 
+    public function setEmail($value)
+    {
+
+    }
+
     // 登录验证
     public function login($data)
     {
@@ -73,5 +80,39 @@ class Admin extends Model
             'status' => 1,
             'msg' => '验证成功'
         ];
+    }
+
+    // 发送邮件验证链接
+    public function sendEmailVerificationNotification()
+    {
+        $verificationUrl = url('user/verify', ['token' => '生成验证令牌'], '', true);
+        $to = $this->email;
+        $subject = '验证邮件';
+        $content = '点击链接完成邮箱验证：' . $verificationUrl;
+        $mail = new PHPMailer(true);
+        try {
+            // 配置SMTP设置
+            $mail->isSMTP();
+            $mail->Host = 'smtp.qq.com';
+            $mail->Port = 465;
+            $mail->SMTPSecure = 'tls';
+            $mail->SMTPAuth = true;
+            $mail->Username = '3162074050@qq.com';
+            $mail->Password = 'wcb1771438097';
+
+            // 设置发件人和收件人
+            $mail->setFrom('bingwuhu123@gmail.com', '天空之眼');
+            $mail->addAddress($to);
+
+            // 设置邮件内容
+            $mail->Subject = $subject;
+            $mail->Body = $content;
+
+            // 发送邮件
+            $mail->send();
+        } catch (Exception $e) {
+            // echo '错误信息：' . $mail->ErrorInfo;
+            return ['status' => 0, 'msg' => $mail->ErrorInfo];
+        }
     }
 }

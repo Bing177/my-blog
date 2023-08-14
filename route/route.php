@@ -19,6 +19,7 @@ Route::group('admin', function () {
     // 路由跳转到个人中心页
     Route::rule('/profile', 'admin/user/index', 'get');
     Route::rule('/update', 'admin/user/update', 'post');
+    Route::rule('/email', 'admin/user/sendEmail', 'post');
 });
 
 return [
