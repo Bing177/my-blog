@@ -3,8 +3,8 @@
 namespace app\admin\controller;
 
 use think\Controller;
-use think\facade\Request;
-use think\captcha\Captcha;
+// use think\captcha\Captcha;
+use app\admin\controller\MyCaptcha;
 
 class Index extends Controller
 {
@@ -69,7 +69,8 @@ class Index extends Controller
             'length' => 4,
             'bg' => [255, 243, 201]
         ];
-        $captcha = new Captcha($config);
+        // $captcha = new Captcha($config);
+        $captcha = new MyCaptcha($config);
         return $captcha->entry();
     }
     // 后台注册
