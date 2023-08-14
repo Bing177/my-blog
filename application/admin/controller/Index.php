@@ -107,9 +107,7 @@ class Index extends Controller
                 'password' => md5($data['password'] . $salt),
                 'salt' => $salt,
                 'nickname' => $nickname,
-                'email' => null,
-                'status' => 0,
-                'is_super' => 0
+                'email' => null
             ];
             // 添加默认头像
             $admin['avatar'] = 'https://pic.imgdb.cn/item/64ad70fc1ddac507cc5629ae.png';

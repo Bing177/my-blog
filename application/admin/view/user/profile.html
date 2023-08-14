@@ -315,7 +315,7 @@
                 loginInfo = loginInfo.split(';')
                 let res = loginInfo.find(v => v.includes('loginInfo'))
                 document.cookie = res + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                location.replace('{:url("/admin")}')
+                location.replace('{:url("/")}')
                 layer.close(idx)
             },
             btn2: () => {

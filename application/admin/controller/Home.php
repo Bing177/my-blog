@@ -15,8 +15,8 @@ class Home extends Controller
     public function index()
     {
         $flg = isAuth();
-        $adminID = cookie('admin')['id'];
-        $avatar = $this->AdminModel->get($adminID)->value('avatar');
+        $adminID = (int) cookie('admin')['id'];
+        $avatar = $this->AdminModel->get($adminID)['avatar'];
         return $this->fetch('index', [
             'flg' => $flg,
             'title' => '天空之眼',

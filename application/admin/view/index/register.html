@@ -91,7 +91,6 @@
                 success(res) {
                     if (res.code) {
                         layer.msg(res.msg)
-
                         setTimeout(() => {
                             location.replace(res.url)
                         }, 1200)
