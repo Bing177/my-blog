@@ -84,6 +84,7 @@
                 data: $('form').serialize(),
                 dataType: 'json',
                 success(res) {
+                    console.log(res)
                     if (res.code) {
                         cookie.set('loginInfo', $('form').serialize(), {
                             maxAge: 604800,

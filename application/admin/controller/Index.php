@@ -40,11 +40,12 @@ class Index extends Controller
             }
             $userinfo = $this->AdminModel->where('username', $data['username'])->find();
             if (!$userinfo) {
-                $this->error('账号未注册');
+                return $this->error('账号未注册');
             }
-            $salt = $userinfo->value('salt');
+            $salt = $userinfo['salt'];
+
             if (md5($data['password'] . $salt) != $userinfo['password']) {
-                $this->error('密码有误');
+                return $this->error('密码有误');
             }
             $user = [
                 'id' => $userinfo['id'],
