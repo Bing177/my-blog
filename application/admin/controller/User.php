@@ -63,7 +63,7 @@ class User extends Controller
                 if ($imgResult['status'] != 1) { // 获取头像失败
                     return $imgResult;
                 }
-                $data['avatar'] = 'http://' . $_SERVER['SERVER_NAME'] . "/" . $imgResult['file'];
+                $data['avatar'] = 'http://' . $_SERVER['SERVER_NAME'] . ":" . $_SERVER['SERVER_PORT'] . "/" . $imgResult['file'];
             } catch (\Exception $e) {
                 return json(['status' => 0, 'msg' => '未选择图片']);
             }
