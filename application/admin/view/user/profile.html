@@ -29,6 +29,11 @@
                 <!-- 头像 -->
                 <div class="info avatar">
                     <img src="{$profile.avatar}" alt="">
+                    {if condition = "$profile.auth == 1"}
+                    <svg class="icon verify-home" aria-hidden="true">
+                        <use xlink:href="#icon-renzheng1"></use>
+                    </svg>
+                    {/if}
                 </div>
                 <!-- 账号 -->
                 <div class="info username">
@@ -152,9 +157,16 @@
             <div class="banner">
                 <div class="avatar">
                     <img src="{$profile.avatar}" alt="" />
+                    {if condition = "$profile.auth == 1"}
+                    <svg class="icon verify" aria-hidden="true">
+                        <use xlink:href="#icon-renzheng1"></use>
+                    </svg>
+                    {/if}
                 </div>
                 <h4 class="nickname">{$profile.nickname}</h4>
             </div>
+            {if condition = "$profile.auth == 0"}
+            <!-- 未认证 -->
             <div class="layui-form layui-form-content">
                 <div class="layui-form-item layui-col-md7">
                     <div class="layui-input-group">
@@ -170,17 +182,36 @@
                         <div class="layui-input-split layui-input-prefix">
                             验证码
                         </div>
-                        <input type="text" name="code" placeholder="不区分大小写" class="layui-input">
+                        <input type="text" name="code" placeholder="6位验证码" class="layui-input">
                         <div class="layui-input-suffix">
-                            <button onclick="sendEmail()" class="layui-btn layui-btn-primary"
+                            <button onclick="sendEmail()" id="send-code" class="layui-btn layui-btn-primary"
                                 style="font-weight: bold;">获取验证码</button>
+                            <div id="timeout"></div>
                         </div>
                     </div>
                 </div>
                 <div class="layui-form-item layui-col-md7">
-                    <button type="button" class="layui-btn layui-btn-primary layui-btn-radius btn-validate">验证</button>
+                    <button onclick="verifyMail()" type="button"
+                        class="layui-btn layui-btn-primary layui-btn-radius btn-validate">验证</button>
                 </div>
             </div>
+            {else}
+            <!-- 已认证 -->
+            <div class="layui-form layui-form-content">
+                <div class="has-verify">
+                    <div class="layui-form-item layui-col-md7">
+                        <div class="layui-input-group">
+                            <div class="layui-input-split layui-input-prefix">
+                                邮箱
+                            </div>
+                            <input type="email" value="{$profile.email}" class="layui-input input-email" readonly>
+                        </div>
+                    </div>
+                    <div class="layui-col-5">verify completed / 邮箱认证成功</div>
+                </div>
+            </div>
+            {/if}
+
         </div>
     </div>
     <!-- 联系我们 -->
@@ -212,6 +243,21 @@
 
     // 发送邮箱认证
     function sendEmail() {
+        let time = 45
+        let timer = null
+        $('#send-code').css({ 'display': 'none' })
+        $('#timeout').css({ 'display': 'block' }).text(time + 's')
+
+        timer = setInterval(() => {
+            time--
+            if (time < 0) {
+                clearInterval(timer)
+                $('#send-code').css({ 'display': 'block' })
+                $('#timeout').css({ 'display': 'none' })
+            }
+            $('#timeout').text(time + 's')
+        }, 1000)
+
         const data = new FormData()
         data.append('email', email.val())
         data.append('code', code.val())
@@ -222,10 +268,51 @@
             contentType: false,
             processData: false,
             dataType: 'json',
-            success: (res) => {
+            success: res => {
                 console.log(res)
+                // layer.msg(res.msg)
             }
         })
+    }
+
+
+    // 认证邮箱
+    async function verifyMail() {
+        const data = new FormData()
+        data.append('code', code.val())
+        // 判断是否输入认证码
+        if (!code.val()) {
+            layui.layer.msg('请输入认证码', {
+                offset: ['300px', '760px']
+            })
+            code.focus()
+        } else {
+            let idx = layer.open({
+                type: 3,
+                title: false,
+                content: 'Loading...',
+            })
+            const res = await $.ajax({
+                type: 'POST',
+                url: '{:url("/admin/verify")}',
+                data,
+                dataType: 'json',
+                processData: false,
+                contentType: false
+            })
+            if (!res.status) {
+                // 认证失败
+                layui.layer.msg(res.msg)
+                layer.close(idx)
+            } else {
+                // 认证成功
+                layer.close(idx)
+                setTimeout(() => {
+                    location.replace('{:url("/admin/profile")}')
+                }, 800)
+            }
+        }
+
     }
 
     $(document).ready(function () {
@@ -253,6 +340,7 @@
         })
 
         let scale = 100; // 初始背景图像大小，以百分比为单位
+        // 给窗口绑定滚轮事件,下滑背景图放大，反之缩小
         $(window).on('wheel', function (e) {
             var delta = e.originalEvent.deltaY;
             if (delta > 0) { // 滚轮向下滚动
@@ -266,12 +354,15 @@
                 'background-size': scale + '%',
             }); // 更新背景图像大小
         });
+
+        // 切换展示区内容
         $(".view").click(async function (e) {
             let view = $(e.target).attr('data-view')
             $(".item").eq(view - 1).css({ display: 'block' }).siblings().css({ display: 'none' })
 
         })
 
+        // 更换头像
         $('.img').click(function () {
             $('#avatar').click()
         })
@@ -285,6 +376,8 @@
                 $('.img').prop('src', reader.result)
             }
         })
+
+        // 修改信息
         $('#submit').click(function () {
             let formData = new FormData($('.layui-form')[0])
             formData.append('avatar', file)

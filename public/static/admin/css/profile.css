@@ -1,3 +1,14 @@
+@font-face {
+    font-family: "阿里妈妈刀隶体 Regular";
+    font-weight: 400;
+    src:
+        url("../fonts/AlimamaDaoLiTi.ttf") format("ttf"),
+        url("../fonts/AlimamaDaoLiTi.woff2") format("woff2"),
+        url("../fonts/AlimamaDaoLiTi.woff") format("woff");
+    font-display: swap;
+}
+
+
 body {
     /* background: url(/static/admin/images/b3.jpg) no-repeat center center fixed; */
     background: url(/static/admin/images/b4.png) no-repeat center center fixed;
@@ -62,7 +73,17 @@ body {
 
 .content .avatar img {
     width: 80px;
+    height: 80px;
+    border-radius: 50%;
     /* border-radius: 50%; */
+}
+
+.content .avatar .icon.verify-home {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    left: 51%;
+    bottom: 52%;
 }
 
 .content .username,
@@ -164,6 +185,8 @@ header h5 {
 
 .content .layui-form .img {
     width: 80px;
+    height: 80px;
+    border-radius: 50%;
 }
 
 .layui-form div {
@@ -250,6 +273,7 @@ header h5 {
 }
 
 .banner .avatar {
+    position: relative;
     margin: -20px 0 10px 0;
 }
 
@@ -259,6 +283,13 @@ header h5 {
     border-radius: 50%;
 }
 
+.banner .avatar .verify {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    left: 68%;
+    bottom: 0;
+}
 
 .banner .nickname {
     font-family: inherit;
@@ -295,4 +326,18 @@ header h5 {
     font-weight: bold;
     font-size: 18px;
     margin-bottom: 20px;
+}
+
+.layui-input-suffix #timeout {
+    width: 106px;
+    margin: 0;
+}
+
+.content .has-verify {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f1f1f1;
+    /* font-family: "阿里妈妈灵动体 VF Thin"; */
+    font-family: "阿里妈妈刀隶体 Regular";
 }

@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "25687518",
+      "name": "认证",
+      "font_class": "renzheng1",
+      "unicode": "ff5b",
+      "unicode_decimal": 65371
+    },
+    {
+      "icon_id": "29312249",
+      "name": "认证",
+      "font_class": "renzheng",
+      "unicode": "ed5d",
+      "unicode_decimal": 60765
+    },
+    {
       "icon_id": "1169858",
       "name": "buy-webhosting-step1-domain-available",
       "font_class": "available",

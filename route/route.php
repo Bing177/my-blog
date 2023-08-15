@@ -18,8 +18,12 @@ Route::group('admin', function () {
     Route::rule('/code', 'admin/index/genCaptcha', 'get');
     // 路由跳转到个人中心页
     Route::rule('/profile', 'admin/user/index', 'get');
+    // 用户信息修改
     Route::rule('/update', 'admin/user/update', 'post');
-    Route::rule('/email', 'admin/user/sendEmail', 'post');
+    // 发送邮箱
+    Route::rule('/email', 'admin/user/sendMail', 'post');
+    // 验证邮箱
+    Route::rule('/verify', 'admin/user/verifyMail', 'post');
 });
 
 return [

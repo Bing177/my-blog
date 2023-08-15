@@ -10,11 +10,12 @@ use PHPMailer\PHPMailer\Exception;
 class Admin extends Model
 {
     // 软删除
-    // use SoftDelete;
+    use SoftDelete;
     protected $table = 't_admin';
     protected $autoWriteTimestamp = true;
     protected $createTime = 'createtime';
     protected $updateTime = 'updatetime';
+    protected $deleteTime = 'deletetime';
 
     // 追加字段
     protected $append = [
@@ -41,11 +42,6 @@ class Admin extends Model
             1 => '是'
         ];
         return $myGet[$value];
-    }
-
-    public function setEmail($value)
-    {
-
     }
 
     // 登录验证
@@ -82,7 +78,7 @@ class Admin extends Model
         ];
     }
 
-    // 发送邮件验证链接
+    // 发送邮件验证链接【暂未用到】
     public function sendEmailVerificationNotification()
     {
         $verificationUrl = url('user/verify', ['token' => '生成验证令牌'], '', true);
