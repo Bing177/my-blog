@@ -3,5 +3,6 @@
 # /vendor
 *.log
 # thinkphp
+upload/
 .env
 .DS_Store
