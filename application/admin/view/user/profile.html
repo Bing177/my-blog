@@ -8,7 +8,7 @@
         <dl class="layui-nav-child">
             <dd><a href="javascript:;" class="view" data-view="1">基本资料</a></dd>
             <dd><a href="javascript:;" class="view" data-view="2">信息修改</a></dd>
-            <dd><a href="javascript:;" class="view" data-view="3">邮箱认证</a></dd>
+            <dd><a href="javascript:;" class="view" data-view="3">个人设置</a></dd>
             <dd onclick="exit()"><a href="javascript:;">注销</a></dd>
         </dl>
     </li>
@@ -214,19 +214,83 @@
 
         </div>
     </div>
+    <!-- 绑定手机号 -->
+    <div class="item" id="email-auth">
+        <div class="content">
+            <h4>绑定手机</h4>
+            <hr />
+            <div class="banner">
+                <div class="avatar">
+                    <img src="{$profile.avatar}" alt="" />
+                    {if condition = "$profile.auth == 1"}
+                    <svg class="icon verify" aria-hidden="true">
+                        <use xlink:href="#icon-renzheng1"></use>
+                    </svg>
+                    {/if}
+                </div>
+                <h4 class="nickname">{$profile.nickname}</h4>
+            </div>
+            {if condition = "$profile.auth == 0"}
+            <!-- 未认证 -->
+            <div class="layui-form layui-form-content">
+                <div class="layui-form-item layui-col-md7">
+                    <div class="layui-input-group">
+                        <div class="layui-input-split layui-input-prefix">
+                            邮箱
+                        </div>
+                        <input type="email" value="{$profile.email}" placeholder="请填写邮箱" class="layui-input input-email"
+                            readonly>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-col-md7">
+                    <div class="layui-input-group">
+                        <div class="layui-input-split layui-input-prefix">
+                            验证码
+                        </div>
+                        <input type="text" name="code" placeholder="6位验证码" class="layui-input">
+                        <div class="layui-input-suffix">
+                            <button onclick="sendEmail()" id="send-code" class="layui-btn layui-btn-primary"
+                                style="font-weight: bold;">获取验证码</button>
+                            <div id="timeout"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-col-md7">
+                    <button onclick="verifyMail()" type="button"
+                        class="layui-btn layui-btn-primary layui-btn-radius btn-validate">验证</button>
+                </div>
+            </div>
+            {else}
+            <!-- 已认证 -->
+            <div class="layui-form layui-form-content">
+                <div class="has-verify">
+                    <div class="layui-form-item layui-col-md7">
+                        <div class="layui-input-group">
+                            <div class="layui-input-split layui-input-prefix">
+                                邮箱
+                            </div>
+                            <input type="email" value="{$profile.email}" class="layui-input input-email" readonly>
+                        </div>
+                    </div>
+                    <div class="layui-col-5">verify completed / 邮箱认证成功</div>
+                </div>
+            </div>
+            {/if}
+
+        </div>
+    </div>
     <!-- 联系我们 -->
     <div class="item" id="contact">
-        <div class="content">4</div>
+        <div class="content">5</div>
     </div>
     <!-- 帮助 -->
     <div class="item" id="help">
-        <div class="content">5</div>
+        <div class="content">6</div>
     </div>
 </div>
 
 </div>
 <script>
-
     let element
     let upload
     let layer
@@ -269,7 +333,6 @@
             processData: false,
             dataType: 'json',
             success: res => {
-                // console.log(res)
                 layer.msg(res.msg)
             }
         })
@@ -394,16 +457,17 @@
                 contentType: false,
                 processData: false,
                 success: (res) => {
-                    if (!res.status) {
-                        // 失败的情况
-                        layer.msg(res.msg)
-                    }
-                    else {
-                        layer.msg(res.msg)
-                        setTimeout(() => {
-                            location.href = '{:url("/admin/profile")}'
-                        }, 800)
-                    }
+                    console.log(res)
+                    // if (!res.status) {
+                    //     // 失败的情况
+                    //     layer.msg(res.msg)
+                    // }
+                    // else {
+                    //     layer.msg(res.msg)
+                    //     setTimeout(() => {
+                    //         location.href = '{:url("/admin/profile")}'
+                    //     }, 800)
+                    // }
                     layer.close(idx)
                 },
                 error: (e) => {
@@ -428,7 +492,7 @@
                 let loginInfo = document.cookie
                 loginInfo = loginInfo.split(';')
                 let res = loginInfo.find(v => v.includes('loginInfo'))
-                document.cookie = res + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                document.cookie = res + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=None; Secure";
                 location.replace('{:url("/")}')
                 layer.close(idx)
             },

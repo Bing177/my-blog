@@ -7,6 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInit53764e3d369699eaa140dc1df396df9f
 {
     public static $files = array (
+        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
+        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
+        'd767e4fc2dc52fe66584ab8c6684783e' => __DIR__ . '/..' . '/adbario/php-dot-notation/src/helpers.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '1cfd2761b63b0a29ed23657ea394cb2d' => __DIR__ . '/..' . '/topthink/think-captcha/src/helper.php',
     );
 
@@ -22,7 +26,35 @@ class ComposerStaticInit53764e3d369699eaa140dc1df396df9f
         ),
         'P' => 
         array (
+            'Psr\\Http\\Message\\' => 17,
+            'Psr\\Http\\Client\\' => 16,
             'PHPMailer\\PHPMailer\\' => 20,
+        ),
+        'O' => 
+        array (
+            'OneSm\\' => 6,
+        ),
+        'G' => 
+        array (
+            'GuzzleHttp\\Psr7\\' => 16,
+            'GuzzleHttp\\Promise\\' => 19,
+            'GuzzleHttp\\' => 11,
+        ),
+        'D' => 
+        array (
+            'Darabonba\\OpenApi\\' => 18,
+            'Darabonba\\GatewaySpi\\' => 21,
+        ),
+        'A' => 
+        array (
+            'AlibabaCloud\\Tea\\XML\\' => 21,
+            'AlibabaCloud\\Tea\\Utils\\' => 23,
+            'AlibabaCloud\\Tea\\' => 17,
+            'AlibabaCloud\\SDK\\Dysmsapi\\V20170525\\' => 36,
+            'AlibabaCloud\\OpenApiUtil\\' => 25,
+            'AlibabaCloud\\Endpoint\\' => 22,
+            'AlibabaCloud\\Credentials\\' => 25,
+            'Adbar\\' => 6,
         ),
     );
 
@@ -39,9 +71,74 @@ class ComposerStaticInit53764e3d369699eaa140dc1df396df9f
         array (
             0 => __DIR__ . '/../..' . '/application',
         ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+        ),
+        'Psr\\Http\\Client\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-client/src',
+        ),
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'OneSm\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/lizhichao/one-sm/src',
+        ),
+        'GuzzleHttp\\Psr7\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
+        ),
+        'GuzzleHttp\\Promise\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
+        ),
+        'GuzzleHttp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
+        ),
+        'Darabonba\\OpenApi\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alibabacloud/darabonba-openapi/src',
+        ),
+        'Darabonba\\GatewaySpi\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alibabacloud/gateway-spi/src',
+        ),
+        'AlibabaCloud\\Tea\\XML\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alibabacloud/tea-xml/src',
+        ),
+        'AlibabaCloud\\Tea\\Utils\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alibabacloud/tea-utils/src',
+        ),
+        'AlibabaCloud\\Tea\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alibabacloud/tea/src',
+        ),
+        'AlibabaCloud\\SDK\\Dysmsapi\\V20170525\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alibabacloud/dysmsapi-20170525/src',
+        ),
+        'AlibabaCloud\\OpenApiUtil\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alibabacloud/openapi-util/src',
+        ),
+        'AlibabaCloud\\Endpoint\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alibabacloud/endpoint-util/src',
+        ),
+        'AlibabaCloud\\Credentials\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alibabacloud/credentials/src',
+        ),
+        'Adbar\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/adbario/php-dot-notation/src',
         ),
     );
 

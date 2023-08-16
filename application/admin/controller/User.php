@@ -6,6 +6,7 @@ use think\Config;
 use think\Controller;
 use app\common\model\Admin;
 use app\helper\EmailHelper;
+use think\facade\Request;
 
 class User extends Controller
 {
@@ -56,6 +57,7 @@ class User extends Controller
             if (!$adminID) {
                 return ['status' => 0, 'msg' => 'admin信息失效，请重新登录'];
             }
+
             // 获取表单信息
             $data = [
                 'username' => $this->request->param('username', '', 'trim'),
@@ -64,24 +66,27 @@ class User extends Controller
                 'status' => $this->request->param('status', 1),
                 'is_super' => $this->request->param('privilege', 0)
             ];
+
             // 判断密码是否为空
             if (!empty($this->request->param('password', '', 'trim')))
                 $data['password'] = $this->request->param('password', '', 'trim');
+
             /* 头像处理 */
             try {
                 // 获取头像
                 $file = $this->request->file('avatar');
                 // 调用生成图片相对路径方法
                 $imgResult = imageRelativePath($file, 1024000, 'jpeg,jpg,png,gif,webp');
-                if ($imgResult['status'] != 1) { // 获取头像失败
+                if ($imgResult['code'] != 1) { // 获取头像失败
                     return $imgResult;
                 }
-                $data['avatar'] = 'http://' . $_SERVER['SERVER_NAME'] . ":" . $_SERVER['SERVER_PORT'] . "/" . $imgResult['file'];
+                $req = Request::instance();
+
+                $data['avatar'] = 'http://' . $req->server('SERVER_NAME') . ":" . $req->server('SERVER_PORT') . "/" . $imgResult['file'];
             } catch (\Exception $e) {
-                return json(['status' => 0, 'msg' => '未选择图片']);
+                return ['status' => 0, 'msg' => '未选择图片'];
             }
 
-            /* 验证 */
             // 封装验证数据
             $validateData = [
                 'username' => $this->request->param('username', '', 'trim'),
@@ -89,29 +94,45 @@ class User extends Controller
                 'nickname' => $this->request->param('nickname', '', 'trim'),
                 'email' => $this->request->param('email', '', 'trim')
             ];
+
+            // 更新验证
             $validateResult = $this->UserModel->MyUpdate($validateData);
             if (!$validateResult['status']) { // 验证失败
                 return $validateResult;
             }
 
-
-            // 更新数据
-            $updateResult = $this->UserModel->isUpdate(true)->update($data, ['id' => $adminID]);
-            if ($updateResult) {
-                // 判断是否输入邮箱
-                if (!empty($data['email'])) {
-                    // 邮箱插入到emails表中
-                    $emailResult = $this->EmailsModel->save([
-                        'email' => $data['email'],
-                        'admin_id' => $adminID
-                    ]);
-                    if (!$emailResult) {
-                        return ['status' => 0, 'msg' => $this->EmailsModel->getError()];
+            // 判断是否输入邮箱
+            if ($data['email']) { // 邮箱不为空
+                // 更新数据
+                $updateResult = $this->UserModel->get($adminID)->isUpdate(true)->save($data);
+                if ($updateResult) { // 更新成功
+                    // 判断emails表中对应的email字段是否存在
+                    $email = $this->EmailsModel->where(['admin_id' => $adminID])->find();
+                    if (empty($email['email'])) { // 不存在，则插入
+                        $emailInsert = $this->EmailsModel->save([
+                            'email' => $data['email'],
+                            'admin_id' => $adminID
+                        ]);
+                        if (!$emailInsert)
+                            return ['status' => 0, 'msg' => $this->EmailsModel->getError()];
+                        else
+                            return ['status' => 1, 'msg' => '修改成功'];
+                    } else { // 存在，则更新
+                        $emailUpdate = $email->isUpdate(true)->save(['email' => $data['email']]);
+                        if (!$emailUpdate)
+                            return ['status' => 0, 'msg' => $email->getError()];
+                        else
+                            return ['status' => 1, 'msg' => '修改成功'];
                     }
-                    return ['status' => 1, 'msg' => '数据修改成功'];
+                } else { // 更新失败
+                    return ['status' => 0, 'msg' => $this->UserModel->getError()];
                 }
-            } else {
-                return ['status' => 0, 'msg' => $this->UserModel->getError()];
+            } else { // 邮箱输入为空
+                $updateResult = $this->UserModel->get($adminID)->isUpdate(true)->save($data);
+                if ($updateResult)
+                    return ['status' => 1, 'msg' => '修改成功'];
+                else
+                    return ['status' => 0, 'msg' => $this->UserModel->getError()];
             }
         }
 

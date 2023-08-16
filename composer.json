@@ -19,7 +19,8 @@
         "php": ">=5.6.0",
         "topthink/framework": "5.1.*",
         "topthink/think-captcha": "^2.0",
-        "phpmailer/phpmailer": "^6.7"
+        "phpmailer/phpmailer": "^6.7",
+        "alibabacloud/dysmsapi-20170525": "2.0.24"
     },
     "autoload": {
         "psr-4": {
@@ -34,5 +35,7 @@
         "allow-plugins": {
             "topthink/think-installer": true
         }
-    }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }

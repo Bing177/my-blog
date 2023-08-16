@@ -49,15 +49,16 @@ if (!function_exists('imageRelativePath')) {
     function imageRelativePath($file = null, $size = 102400, $type = "jpg,png,jpeg,gif")
     {
         if ($file) {
-            $info = $file->validate(['size' => $size, 'ext' => $type])->move('upload');
+            $info = $file->validate(['size' => $size, 'ext' => $type])->move('public/upload');
             if ($info) {
                 $filePath = $info->getPathName();
-                return ['status' => 1, 'msg' => '上传成功', 'file' => $filePath];
+                $filePath = str_replace('public', '', $filePath);
+                return ['code' => 1, 'msg' => '上传成功', 'file' => $filePath];
             } else {
-                return ['status' => 0, 'msg' => $file->getError()];
+                return ['code' => 0, 'msg' => $file->getError()];
             }
         } else {
-            return ['status' => 0, 'message' => '没有文件被上传'];
+            return ['code' => 0, 'message' => '没有文件被上传'];
         }
     }
 }
